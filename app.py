@@ -157,7 +157,8 @@ with pred_tab:
                p.predicted_home_goals, p.predicted_away_goals,
                p.predicted_winner, p.confidence
         FROM `{PROJECT}.{DATASET}.predictions` p
-        JOIN `{PROJECT}.{DATASET}.matches` m USING (match_id)
+        JOIN `{PROJECT}.{DATASET}.matches` m
+          ON CAST(p.match_id AS STRING) = CAST(m.match_id AS STRING)
         ORDER BY p.confidence DESC, m.date
     """)
     if df.empty:
